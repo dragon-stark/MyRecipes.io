@@ -24,8 +24,8 @@
           <a href="index.html" class="nav-logo">
             <img src="./assets/logo.svg" alt="simply recipes" />
           </a>
-          <button class="nav-btn btn">
-            <i class="fas fa-align-justify"></i>
+          <button class="nav-btn btn" aria-label="toggle navigation">
+            <i class="fas fa-align-justify" aria-hidden="true"></i>
           </button>
         </div>
         <div class="nav-links">
@@ -41,6 +41,7 @@
       </div>
     </nav>
     <!-- end of nav -->
+
     <!-- main -->
     <section class="recipes-container">
       <div class="content">
@@ -48,7 +49,7 @@
 
         <!-- Search UI -->
         <form class="search" role="search" aria-label="Search recipes">
-          <input id="search" type="search" placeholder="Search by title, tag, ingredient">
+          <input id="search" type="search" placeholder="Search by title, tag, ingredient" />
         </form>
         <ul id="search-results" class="search-results" aria-live="polite"></ul>
 
@@ -59,94 +60,132 @@
         <div class="tags-list" id="tags-list"></div>
       </div>
     </section>
-
     <!-- end of main -->
+
     <!-- footer -->
     <footer class="page-footer">
       <p>
-        &copy;
-        <span id="date"></span>
+        &copy; <span id="date"></span>
         <span class="footer-logo">Recipes</span>
         handcrafted by
         <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
       </p>
     </footer>
+
     <script src="./js/app.js"></script>
-    <!-- Render recipes grid -->
+
+    <!-- Render recipes grid + tag cloud (subfolder safe) -->
     <script>
       (async function () {
         try {
-          const res = await fetch('recipes.json', { cache: 'no-store' });
-          if (!res.ok) throw new Error('recipes.json not found');
+          // Works at / and at /MyRecipes.io/ on GitHub Pages
+          const basePath = (function () {
+            const parts = location.pathname.split("/");
+            if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
+            return parts.join("/") || "/";
+          })();
+          const join = (a, b) =>
+            (a.endsWith("/") ? a.slice(0, -1) : a) + "/" + (b.startsWith("/") ? b.slice(1) : b);
+
+          const dataUrl = join(basePath, "recipes.json");
+          const res = await fetch(dataUrl, { cache: "no-store" });
+          if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
           const recipes = await res.json();
 
-          const list = document.getElementById('recipes-list');
-          list.innerHTML = recipes.map(r => `
-        <a href="single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
-          <img src="${r.image}" class="img recipe-img" alt="${r.title}" loading="lazy">
-          <h5>${r.title}</h5>
-          <p>${r.description || ''}</p>
-          <small>${(r.tags || []).join(', ')}</small>
-        </a>
-      `).join('');
+          const list = document.getElementById("recipes-list");
+          list.innerHTML = recipes
+            .map(
+              (r) => `
+          <a href="single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
+            <img src="${r.image}" class="img recipe-img" alt="${r.title}" loading="lazy" />
+            <h5>${r.title}</h5>
+            <p>${r.description || ""}</p>
+            <small>${(r.tags || []).join(", ")}</small>
+          </a>`
+            )
+            .join("");
 
           // Tag cloud
           const tagCounts = recipes.reduce((acc, r) => {
-            (r.tags || []).forEach(t => acc[t] = (acc[t] || 0) + 1);
+            (r.tags || []).forEach((t) => (acc[t] = (acc[t] || 0) + 1));
             return acc;
           }, {});
-          const tagList = document.getElementById('tags-list');
+          const tagList = document.getElementById("tags-list");
           tagList.innerHTML = Object.entries(tagCounts)
             .sort(([a], [b]) => a.localeCompare(b))
-            .map(([tag, count]) => `<a href="tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`)
-            .join('');
+            .map(
+              ([tag, count]) =>
+                `<a href="tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`
+            )
+            .join("");
         } catch (err) {
           console.error(err);
-          document.getElementById('recipes-list').innerHTML =
-            '<p>Could not load recipes.json</p>';
+          const container = document.getElementById("recipes-list");
+          if (container) container.innerHTML = "<p>Could not load recipes.json</p>";
         }
       })();
     </script>
 
-    <!-- Lunr and search logic -->
+    <!-- Lunr and search logic (subfolder safe) -->
     <script src="https://unpkg.com/lunr/lunr.js"></script>
     <script>
       (async function () {
         try {
-          const docs = await (await fetch('recipes.json', { cache: 'no-store' })).json();
+          const basePath = (function () {
+            const parts = location.pathname.split("/");
+            if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
+            return parts.join("/") || "/";
+          })();
+          const join = (a, b) =>
+            (a.endsWith("/") ? a.slice(0, -1) : a) + "/" + (b.startsWith("/") ? b.slice(1) : b);
+
+          const dataUrl = join(basePath, "recipes.json");
+          const docs = await (await fetch(dataUrl, { cache: "no-store" })).json();
+
           const idx = lunr(function () {
-            this.ref('slug');
-            this.field('title', { boost: 3 });
-            this.field('description');
-            this.field('tags');
-            this.field('ingredients');
-            docs.forEach(d => this.add({
-              slug: d.slug,
-              title: d.title,
-              description: d.description || '',
-              tags: (d.tags || []).join(' '),
-              ingredients: (d.ingredients || []).join(' ')
-            }));
+            this.ref("slug");
+            this.field("title", { boost: 3 });
+            this.field("description");
+            this.field("tags");
+            this.field("ingredients");
+            docs.forEach((d) =>
+              this.add({
+                slug: d.slug,
+                title: d.title,
+                description: d.description || "",
+                tags: (d.tags || []).join(" "),
+                ingredients: (d.ingredients || []).join(" "),
+              })
+            );
           });
 
-          const input = document.getElementById('search');
-          const out = document.getElementById('search-results');
-          input.addEventListener('input', () => {
-            const q = input.value.trim();
-            out.innerHTML = '';
-            if (!q) return;
-            idx.search(q).slice(0, 20).forEach(hit => {
-              const d = docs.find(x => x.slug === hit.ref);
-              out.insertAdjacentHTML('beforeend',
-                `<li><a href="single-recipe.html?slug=${encodeURIComponent(d.slug)}">${d.title}</a> — ${d.description}</li>`);
-            });
+          const input = document.getElementById("search");
+          const out = document.getElementById("search-results");
+          if (!input || !out) return;
+
+          // Simple debounce for nicer typing
+          let t;
+          input.addEventListener("input", () => {
+            clearTimeout(t);
+            t = setTimeout(() => {
+              const q = input.value.trim();
+              out.innerHTML = "";
+              if (!q) return;
+
+              idx.search(q).slice(0, 20).forEach((hit) => {
+                const d = docs.find((x) => x.slug === hit.ref);
+                out.insertAdjacentHTML(
+                  "beforeend",
+                  `<li><a href="single-recipe.html?slug=${encodeURIComponent(d.slug)}">${d.title}</a> — ${d.description}</li>`
+                );
+              });
+            }, 120);
           });
         } catch (err) {
           console.error(err);
         }
       })();
     </script>
-
   </body>
 
 </html>
