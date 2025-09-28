@@ -1,110 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipe Template || Final</title>
-    <!-- favicon -->
-    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
-    <!-- normalize -->
-    <link rel="stylesheet" href="./css/normalize.css" />
-    <!-- font-awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
-    <!-- main css -->
-    <link rel="stylesheet" href="./css/main.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipes by Tag | My Recipes</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/app.js"></script>
   </head>
+
   <body>
-    <!-- nav  -->
     <nav class="navbar">
       <div class="nav-center">
         <div class="nav-header">
-          <a href="index.html" class="nav-logo">
-            <img src="./assets/logo.svg" alt="simply recipes" />
-          </a>
-          <button class="nav-btn btn">
+          <a href="index.html" class="nav-logo">My Recipes</a>
+          <button class="btn nav-btn" aria-label="toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
         </div>
         <div class="nav-links">
           <a href="index.html" class="nav-link">home</a>
-          <a href="about.html" class="nav-link">about</a>
-          <a href="tags.html" class="nav-link">tags</a>
           <a href="recipes.html" class="nav-link">recipes</a>
-
-          <div class="nav-link contact-link">
-            <a href="contact.html" class="btn">contact</a>
-          </div>
+          <a href="tags.html" class="nav-link">tags</a>
         </div>
       </div>
     </nav>
-    <!-- end of nav -->
+
     <main class="page">
-      <div class="featured-recipes">
-        <h4>Beef</h4>
-        <!-- recipes list -->
-        <div class="recipes-list">
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-1.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Carne Asada</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-2.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Greek Ribs</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-3.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Vegetable Soup</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-4.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Banana Pancakes</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-        </div>
-        <!-- end of recipe list -->
-      </div>
+      <section class="recipes-container">
+        <!-- Title updates dynamically -->
+        <h1 id="tag-title" class="page-title">#tag</h1>
+
+        <!-- Results injected here -->
+        <div class="recipes-list" id="tag-results" aria-live="polite"></div>
+      </section>
     </main>
-    <!-- footer -->
+
     <footer class="page-footer">
-      <p>
-        &copy;
-        <span id="date"></span>
-        <span class="footer-logo">Recipes</span>
-        handcrafted by
-        <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
-      </p>
+      <p>&copy; <span id="date"></span> My Recipes</p>
     </footer>
-    <script src="./js/app.js"></script>
+
+    <!-- Dynamic tag renderer -->
+    <script>
+      (async function () {
+        try {
+          const params = new URLSearchParams(location.search);
+          const tag = params.get('tag');
+          const titleEl = document.getElementById('tag-title');
+          const listEl = document.getElementById('tag-results');
+
+          if (!tag) {
+            titleEl.textContent = 'No tag selected';
+            listEl.innerHTML = '<p>Select a tag from the <a href="tags.html">tags</a> page.</p>';
+            return;
+          }
+
+          titleEl.textContent = '#' + tag;
+
+          const res = await fetch('recipes.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('recipes.json not found');
+          const all = await res.json();
+
+          const items = all.filter(r => (r.tags || []).includes(tag));
+          if (items.length === 0) {
+            listEl.innerHTML = `<p>No recipes for <strong>#${tag}</strong> yet.</p>`;
+            return;
+          }
+
+          listEl.innerHTML = items.map(r => `
+        <a class="recipe" href="single-recipe.html?slug=${encodeURIComponent(r.slug)}">
+          <img class="img recipe-img" src="${r.image}" alt="${r.title}" loading="lazy">
+          <h5>${r.title}</h5>
+          <p>${r.description || ''}</p>
+          <small>${(r.tags || []).join(', ')}</small>
+        </a>
+      `).join('');
+        } catch (err) {
+          console.error(err);
+          document.getElementById('tag-results').innerHTML =
+            '<p>Could not load tag results. Check console for details.</p>';
+        }
+      })();
+    </script>
+    <!-- Font Awesome (if you’re using icons already in the site) -->
+    <script src="https://kit.fontawesome.com/a2e0e6ad5b.js" crossorigin="anonymous"></script>
   </body>
+
 </html>
