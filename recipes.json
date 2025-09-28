@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "cornbread",
+    "title": "Cornbread",
+    "description": "A golden, crumbly, slightly sweet Southern classic.",
+    "image": "assets/images/cornbread.jpg",
+    "tags": ["bread","side"],
+    "yield": "8 servings",
+    "prepTime": "PT10M",
+    "cookTime": "PT25M",
+    "totalTime": "PT35M",
+    "ingredients": [
+      "1 cup cornmeal",
+      "1 cup flour",
+      "1/4 cup sugar",
+      "1 tbsp baking powder",
+      "1/2 tsp salt",
+      "1 cup milk",
+      "2 eggs",
+      "1/4 cup melted butter"
+    ],
+    "instructions": [
+      "Preheat oven to 400°F (200°C).",
+      "In a bowl, mix dry ingredients.",
+      "In another bowl, mix wet ingredients.",
+      "Combine wet and dry, mix until just combined.",
+      "Pour into greased pan, bake 20–25 min."
+    ]
+  }
+]
