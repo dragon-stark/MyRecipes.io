@@ -26,5 +26,30 @@
       "Combine wet and dry, mix until just combined.",
       "Pour into greased pan, bake 20–25 min."
     ]
+  },
+  {
+    "slug": "banana-pancakes",
+    "title": "Banana Pancakes",
+    "description": "Fluffy and fast for weekend mornings.",
+    "image": "assets/recipes/recipe-4.jpeg",
+    "tags": ["breakfast","sweet"],
+    "yield": "4 servings",
+    "prepTime": "PT10M",
+    "cookTime": "PT10M",
+    "totalTime": "PT20M",
+    "ingredients": [
+      "2 ripe bananas",
+      "2 eggs",
+      "1 cup flour",
+      "1 cup milk",
+      "1 tsp baking powder",
+      "Pinch of salt",
+      "Butter or oil for the pan"
+    ],
+    "instructions": [
+      "Mash bananas; whisk in eggs and milk.",
+      "Stir in flour, baking powder, and salt until just combined.",
+      "Cook 2–3 minutes per side on a greased skillet."
+    ]
   }
 ]
