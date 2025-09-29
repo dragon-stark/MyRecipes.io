@@ -84,7 +84,7 @@
   "title": "Greek Ribs",
   "description": "Lemony, garlicky ribs with herby crust.",
   "image": "assets/recipes/recipe-2.jpeg",
-  "tags": ["pork","dinner","roast"],
+  "tags": ["pork","dinner"],
   "yield": "4 servings",
   "prepTime": "PT15M",
   "cookTime": "PT1H15M",
