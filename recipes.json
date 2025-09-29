@@ -2,29 +2,28 @@
   {
     "slug": "cornbread",
     "title": "Cornbread",
-    "description": "A golden, crumbly, slightly sweet Southern classic.",
+    "description": "A golden, fluffy, slightly sweet Southern classic.",
     "image": "assets/recipes/cornbread.png",
     "tags": ["bread","side"],
     "yield": "8 servings",
     "prepTime": "PT10M",
-    "cookTime": "PT25M",
-    "totalTime": "PT35M",
+    "cookTime": "PT20M",
+    "totalTime": "PT50M",
     "ingredients": [
-      "1 cup cornmeal",
-      "1 cup flour",
-      "1/4 cup sugar",
-      "1 tbsp baking powder",
-      "1/2 tsp salt",
-      "1 cup milk",
-      "2 eggs",
-      "1/4 cup melted butter"
+      "1 can of cream of corn",
+      "1 can of corn (undrained)",
+      "1 cup of sour cream",
+      "1 tbsp brown sugar",
+      "1 box of Jiffy corn mix",
+      "1 cup melted butter",
+      "2 eggs"
     ],
     "instructions": [
-      "Preheat oven to 400°F (200°C).",
+      "Preheat oven to 350°F",
       "In a bowl, mix dry ingredients.",
       "In another bowl, mix wet ingredients.",
       "Combine wet and dry, mix until just combined.",
-      "Pour into greased pan, bake 20–25 min."
+      "Pour into 9x13 pan, bake 40–45 min."
     ]
   },
   {
