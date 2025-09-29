@@ -469,7 +469,7 @@ Recipes
   transition: var(--transition);
 }
 .tags-list a:hover {
-  color: var(--primary-500);
+  color: var(--grey-300);
 }
 .recipe {
   display: block;
@@ -684,7 +684,7 @@ Recipe Template
   font-weight: 600;
 }
 .recipe-tags a {
-  background: var(--primary-500);
+  background: var(--grey-200);
   border-radius: var(--borderRadius);
   color: var(--white);
   padding: 0.05rem 0.5rem;
