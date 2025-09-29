@@ -16,6 +16,101 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
 
+  <!-- dynamic loader -->
+  <script>
+    (async function () {
+      try {
+        // figure out base path (works locally and on GitHub Pages)
+        const basePath = (function () {
+          const parts = location.pathname.split("/");
+          if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
+          return parts.join("/") || "/";
+        })();
+        const join = (a, b) =>
+          (a.endsWith("/") ? a.slice(0, -1) : a) + "/" + (b.startsWith("/") ? b.slice(1) : b);
+
+        // 1) read slug
+        const slug = new URLSearchParams(location.search).get('slug');
+
+        const dataUrl = join(basePath, "recipes.json");
+        const res = await fetch(dataUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error('recipes.json not found at ' + dataUrl);
+        const all = await res.json();
+
+        const r = all.find(x => x.slug === slug) || all[0]; // fallback to first if missing
+        if (!r) {
+          document.body.innerHTML = '<main class="page"><h1>Recipe not found</h1></main>';
+          return;
+        }
+
+        // 2) fill content
+        document.getElementById('recipe-title').textContent = r.title;
+        document.getElementById('recipe-desc').textContent = r.description || '';
+
+        const img = document.getElementById('recipe-image');
+        img.src = r.image;
+        img.alt = r.title;
+
+        document.getElementById('recipe-prep').textContent =
+          r.prepTime ? r.prepTime.replace(/^PT/, '').toLowerCase() : '—';
+        document.getElementById('recipe-cook').textContent =
+          r.cookTime ? r.cookTime.replace(/^PT/, '').toLowerCase() : '—';
+        document.getElementById('recipe-yield').textContent = r.yield || '—';
+
+        document.getElementById('recipe-tags').innerHTML =
+          (r.tags || []).map(t =>
+            `<a href="tag-template.html?tag=${encodeURIComponent(t)}">${t}</a>`
+          ).join('');
+
+        document.getElementById('ingredients').innerHTML =
+          (r.ingredients || []).map(i => `<p class="single-ingredient">${i}</p>`).join('');
+
+        document.getElementById('instructions').innerHTML =
+          (r.instructions || []).map((step, i) => `
+            <div class="single-instruction">
+              <header><p>step ${i + 1}</p><div></div></header>
+              <p>${step}</p>
+            </div>
+          `).join('');
+
+        // NEW: tools rendering (data-driven)
+        const toolsHost = document.getElementById('tools');
+        if (toolsHost) {
+          const tools = (r.tools || []);
+          toolsHost.innerHTML = tools.length
+            ? tools.map(t => `<p class="single-tool">${t}</p>`).join('')
+            : `<p class="single-tool">No special tools listed</p>`;
+        }
+
+        // 3) JSON-LD for rich results
+        const ld = {
+          "@context": "https://schema.org",
+          "@type": "Recipe",
+          "name": r.title,
+          "description": r.description || "",
+          "image": [r.image],
+          "recipeIngredient": r.ingredients || [],
+          "recipeInstructions": (r.instructions || []).map(txt => ({ "@type": "HowToStep", "text": txt })),
+          "totalTime": r.totalTime || undefined,
+          "prepTime": r.prepTime || undefined,
+          "cookTime": r.cookTime || undefined,
+          "recipeYield": r.yield || undefined,
+          // optional: include tools as keywords so search has a hint
+          "keywords": (r.tags || []).concat(r.tools || []).join(", ")
+        };
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.textContent = JSON.stringify(ld);
+        document.head.appendChild(s);
+
+      } catch (err) {
+        console.error(err);
+        document.querySelector('main.page').innerHTML =
+          '<section class="recipes-container"><h1>Error loading recipe</h1></section>';
+      }
+    })();
+  </script>
+
   <body>
     <!-- nav  -->
     <nav class="navbar">
@@ -51,17 +146,17 @@
             <p id="recipe-desc"></p>
             <div class="recipe-icons">
               <article>
-                <i class="fas fa-clock" aria-hidden="true"></i>
+                <i class="fas fa-clock"></i>
                 <h5>prep time</h5>
                 <p id="recipe-prep">—</p>
               </article>
               <article>
-                <i class="far fa-clock" aria-hidden="true"></i>
+                <i class="far fa-clock"></i>
                 <h5>cook time</h5>
                 <p id="recipe-cook">—</p>
               </article>
               <article>
-                <i class="fas fa-user-friends" aria-hidden="true"></i>
+                <i class="fas fa-user-friends"></i>
                 <h5>servings</h5>
                 <p id="recipe-yield">—</p>
               </article>
@@ -74,7 +169,7 @@
         <section class="recipe-content">
           <article>
             <h4>instructions</h4>
-            <div id="instructions" aria-live="polite"></div>
+            <div id="instructions"></div>
           </article>
           <article class="second-column">
             <div>
@@ -83,9 +178,8 @@
             </div>
             <div>
               <h4>tools</h4>
-              <p class="single-tool">10" cast-iron (example)</p>
-              <p class="single-tool">Mixing bowls</p>
-              <p class="single-tool">Whisk</p>
+              <!-- dynamic tools will be injected here -->
+              <div id="tools"></div>
             </div>
           </article>
         </section>
@@ -102,109 +196,7 @@
         <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
       </p>
     </footer>
-
-    <!-- keep your app.js -->
     <script src="./js/app.js"></script>
-
-    <!-- Data binding + JSON-LD (subfolder-safe, preserves your classes/styles) -->
-    <script>
-      (async function () {
-        try {
-          // subfolder-safe base path (works at / and /MyRecipes.io/)
-          const basePath = (function () {
-            const parts = location.pathname.split("/");
-            if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
-            return parts.join("/") || "/";
-          })();
-          const join = (a, b) =>
-            (a.endsWith("/") ? a.slice(0, -1) : a) +
-            "/" +
-            (b.startsWith("/") ? b.slice(1) : b);
-
-          // 1) read slug (fallback to first recipe if missing)
-          const slug = new URLSearchParams(location.search).get("slug");
-
-          // 2) load data
-          const dataUrl = join(basePath, "recipes.json");
-          const res = await fetch(dataUrl, { cache: "no-store" });
-          if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
-          const all = await res.json();
-
-          const r = slug ? all.find((x) => x.slug === slug) : all[0];
-          if (!r) {
-            document.querySelector("main.page").innerHTML =
-              '<section class="recipes-container"><h1>Recipe not found</h1><p><a href="./recipes.html">Back to all recipes</a></p></section>';
-            return;
-          }
-
-          // 3) fill content (keep your classes)
-          document.getElementById("recipe-title").textContent = r.title;
-          document.getElementById("recipe-desc").textContent =
-            r.description || "";
-
-          const img = document.getElementById("recipe-image");
-          img.src = r.image;
-          img.alt = r.title;
-
-          const pretty = (s) => (s ? s.replace(/^PT/i, "").toLowerCase() : "—");
-          document.getElementById("recipe-prep").textContent = pretty(r.prepTime);
-          document.getElementById("recipe-cook").textContent = pretty(r.cookTime);
-          document.getElementById("recipe-yield").textContent = r.yield || "—";
-
-          document.getElementById('recipe-tags').innerHTML =
-            (r.tags || [])
-              .map(t => `<a href="./tag-template.html?tag=${encodeURIComponent(t)}">${t}</a>`)
-              .join('');
-
-
-
-          document.getElementById("ingredients").innerHTML = (r.ingredients || [])
-            .map((i) => `<p class="single-ingredient">${i}</p>`)
-            .join("");
-
-          document.getElementById("instructions").innerHTML = (
-            r.instructions || []
-          )
-            .map(
-              (step, i) => `
-            <div class="single-instruction">
-              <header><p>step ${i + 1}</p><div></div></header>
-              <p>${step}</p>
-            </div>`
-            )
-            .join("");
-
-          // 4) JSON-LD structured data
-          const ld = {
-            "@context": "https://schema.org",
-            "@type": "Recipe",
-            name: r.title,
-            description: r.description || "",
-            image: [r.image],
-            recipeIngredient: r.ingredients || [],
-            recipeInstructions: (r.instructions || []).map((txt) => ({
-              "@type": "HowToStep",
-              text: txt,
-            })),
-            totalTime: r.totalTime || undefined,
-            prepTime: r.prepTime || undefined,
-            cookTime: r.cookTime || undefined,
-            recipeYield: r.yield || undefined,
-          };
-          const s = document.createElement("script");
-          s.type = "application/ld+json";
-          s.textContent = JSON.stringify(ld);
-          document.head.appendChild(s);
-
-          // Optional: nicer tab title
-          document.title = r.title + " | Recipes";
-        } catch (err) {
-          console.error(err);
-          document.querySelector("main.page").innerHTML =
-            '<section class="recipes-container"><h1>Error loading recipe</h1><p>Open Console for details.</p></section>';
-        }
-      })();
-    </script>
   </body>
 
 </html>
