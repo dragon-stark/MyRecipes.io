@@ -43,27 +43,29 @@
     <!-- end of nav -->
 
     <!-- main -->
-    <section class="recipes-container">
-      <!-- LEFT SIDEBAR expected by CSS (200px at ≥992px) -->
-      <aside class="tags-container">
-        <h4>Recipes</h4>
-        <div class="tags-list" id="tags-list"></div>
-      </aside>
+    <main class="page">
+      <section class="recipes-container">
+        <!-- LEFT SIDEBAR expected by CSS (200px at ≥992px) -->
+        <aside class="tags-container">
+          <h4>Recipes</h4>
+          <div class="tags-list" id="tags-list"></div>
+        </aside>
 
-      <!-- MAIN COLUMN -->
-      <div class="content">
-        <h1 class="page-title">All recipes</h1>
+        <!-- MAIN COLUMN -->
+        <div class="content">
+          <h1 class="page-title">All recipes</h1>
 
-        <!-- Search UI -->
-        <form class="search" role="search" aria-label="Search recipes">
-          <input id="search" type="search" placeholder="Search by title, tag, ingredient" />
-        </form>
-        <ul id="search-results" class="search-results" aria-live="polite"></ul>
+          <!-- Search UI -->
+          <form class="search" role="search" aria-label="Search recipes">
+            <input id="search" type="search" placeholder="Search by title, tag, ingredient" />
+          </form>
+          <ul id="search-results" class="search-results" aria-live="polite"></ul>
 
-        <!-- Dynamic list target -->
-        <div class="recipes-list" id="recipes-list" aria-live="polite"></div>
-      </div>
-    </section>
+          <!-- Dynamic list target -->
+          <div class="recipes-list" id="recipes-list" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
     <!-- end of main -->
 
     <!-- footer -->
