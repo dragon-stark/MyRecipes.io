@@ -20,7 +20,7 @@
   <script>
     (async function () {
       try {
-        // figure out base path (works locally and on GitHub Pages)
+        // subfolder-safe base path (works locally and on GitHub Pages)
         const basePath = (function () {
           const parts = location.pathname.split("/");
           if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
@@ -29,7 +29,7 @@
         const join = (a, b) =>
           (a.endsWith("/") ? a.slice(0, -1) : a) + "/" + (b.startsWith("/") ? b.slice(1) : b);
 
-        // 1) read slug
+        // 1) read slug from query
         const slug = new URLSearchParams(location.search).get('slug');
 
         const dataUrl = join(basePath, "recipes.json");
@@ -37,9 +37,17 @@
         if (!res.ok) throw new Error('recipes.json not found at ' + dataUrl);
         const all = await res.json();
 
-        const r = all.find(x => x.slug === slug) || all[0]; // fallback to first if missing
-        if (!r) {
-          document.body.innerHTML = '<main class="page"><h1>Recipe not found</h1></main>';
+        // STRICT: no fallback; show a clear Not Found if bad/missing slug
+        const r = all.find(x => x.slug === slug);
+        if (!slug || !r) {
+          document.body.innerHTML = `
+            <main class="page">
+              <section class="recipes-container">
+                <h1>Recipe not found</h1>
+                <p>We couldn’t find a recipe for <code>${slug || '(no slug given)'}</code>.</p>
+                <p><a href="./recipes.html">Back to all recipes</a></p>
+              </section>
+            </main>`;
           return;
         }
 
@@ -73,7 +81,7 @@
             </div>
           `).join('');
 
-        // NEW: tools rendering (data-driven)
+        // tools rendering (data-driven)
         const toolsHost = document.getElementById('tools');
         if (toolsHost) {
           const tools = (r.tools || []);
@@ -95,7 +103,6 @@
           "prepTime": r.prepTime || undefined,
           "cookTime": r.cookTime || undefined,
           "recipeYield": r.yield || undefined,
-          // optional: include tools as keywords so search has a hint
           "keywords": (r.tags || []).concat(r.tools || []).join(", ")
         };
         const s = document.createElement('script');
@@ -105,8 +112,12 @@
 
       } catch (err) {
         console.error(err);
-        document.querySelector('main.page').innerHTML =
-          '<section class="recipes-container"><h1>Error loading recipe</h1></section>';
+        const host = document.querySelector('main.page');
+        if (host) {
+          host.innerHTML = '<section class="recipes-container"><h1>Error loading recipe</h1></section>';
+        } else {
+          document.body.innerHTML = '<main class="page"><h1>Error loading recipe</h1></main>';
+        }
       }
     })();
   </script>
