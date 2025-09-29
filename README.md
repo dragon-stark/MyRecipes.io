@@ -1,83 +1,81 @@
-# 🍲 MyRecipes.io
+# 🍴 MyRecipes.io
 
-## 📌 Project Overview
-This project came out of the pain of managing recipes the old-school way: every time we wanted to add one, we had to duplicate static HTML files, manually update links, and pray we didn’t break the layout. It worked for a couple of pages, but it got ugly fast. So we decided to treat recipes like data instead of hard-coded pages. Now everything lives in a single JSON file, and the site pulls in content dynamically. That means adding a new recipe is as simple as dropping in an object — no template duplication, no layout drift, no broken links. Cleaner codebase, faster updates, and way easier for anyone on the team to contribute.
-
----
-
-## 🎯 Goals
-- Centralize recipe data in `recipes.json` for single-source-of-truth management.
-- Dynamically generate recipe listings, detail pages, and tag-based filters.
-- Maintain consistent UI/UX styling across all recipe entries.
-- Support accessibility and responsive design for cross-device usability.
-- Provide maintainable, extensible code that a small dev team can iterate on.
+> A modern, data-driven recipe book built with plain HTML, CSS, and vanilla JavaScript.
+> Every recipe is powered by JSON—no hard-coded pages, just clean content rendered dynamically.
 
 ---
 
-## 🛠️ Functional Requirements
+## 🌐 Live Demo
+👉 [View the project live](https://dragon-stark.github.io/MyRecipes.io/)
 
-### 1. Data Source
-- All recipe data stored in `recipes.json`.
-- Each recipe object includes:
-  - `slug`, `title`, `description`, `image`
-  - `tags[]`, `yield`, `prepTime`, `cookTime`, `totalTime`
-  - `ingredients[]`, `instructions[]`
+---
 
-### 2. Recipe Listing Page (`recipes.html`)
-- Displays all recipes with title, image, description, and tags.
-- Search by title, ingredient, or tag.
-- Responsive grid layout.
+## 📌 Problem Statement
+Most recipe sites are cluttered with ads, pop-ups, and endless scrolling before you even see the ingredients.
+**MyRecipes.io** solves that by being lightweight, structured, and fast:
+- Recipes live in a single JSON source of truth
+- Pages render dynamically from that data
+- Search and tags make navigation intuitive
+- A validator script ensures consistency and prevents broken entries
 
-### 3. Single Recipe Page (`single-recipe.html`)
-- Dynamic rendering based on `slug`.
-- Shows hero image, prep/cook time, yield, tags, instructions, and ingredients.
-- Includes JSON-LD schema for SEO.
+The result: a recipe book that feels more like a mini-CMS than a blog.
 
-### 4. Tag Filtering Page (`tag-template.html`)
-- Filter recipes by selected tag.
-- Tag cloud dynamically generated with counts.
+---
 
-### 5. General
-- Navigation and footer consistent across all pages.
-- Accessibility via semantic HTML and ARIA roles.
-- Performance: lazy-loading images, no redundant fetches.
+## 🎯 Project Goals
+- Centralize recipe data in `recipes.json` for easy updates
+- Dynamically generate listings, detail pages, and tag-based filters
+- Maintain a consistent, responsive UI/UX across all devices
+- Support accessibility with semantic HTML and ARIA roles
+- Provide maintainable, extensible code a small dev team can iterate on
+
+---
+
+## 🛠️ Functional Overview
+- **Recipes Page (`recipes.html`)**
+  Displays all recipes in a responsive grid with search and tag browsing.
+
+- **Single Recipe Page (`single-recipe.html`)**
+  Loads details dynamically by `slug`: hero image, timings, yield, tags, ingredients, instructions, and tools. JSON-LD schema included for SEO.
+
+- **Tags Page (`tag-template.html`)**
+  Filters recipes by tag with dynamically generated counts.
+
+- **Consistency & Performance**
+  Navigation and footer are global, images lazy-load, and the validator script checks recipes before deployment.
 
 ---
 
 ## ✅ Acceptance Criteria
-- [ ] Adding a new recipe object to `recipes.json` automatically updates **Recipes page**, **Single Recipe view**, and **Tag filters**.
-- [ ] Navigating to `single-recipe.html?slug=banana-pancakes` loads the correct recipe with all fields populated.
-- [ ] Searching “cornbread” in the Recipes page returns the expected card.
-- [ ] Tag clicks link correctly to `tag-template.html?tag=bread` (or other tags).
-- [ ] Site passes mobile-responsive checks (Chrome dev tools).
-- [ ] No console errors in modern browsers.
+- Adding a new recipe to `recipes.json` updates all relevant views (list, single, tag).
+- Recipe detail page correctly loads when accessed by slug.
+- Search returns accurate results across title, ingredients, and tags.
+- Tag links route correctly to filtered views.
+- Site is responsive and accessible with no console errors.
+
+---
+
+## 👥 User Stories
+- **As a visitor**, I want to browse recipes by category so I can quickly find meals that fit my needs.
+- **As a cook**, I want clear, step-by-step instructions so I can follow a recipe without confusion.
+- **As a contributor**, I want to add new recipes in JSON without touching HTML so updates are simple and low-risk.
+- **As a site owner**, I want consistent styling and SEO-friendly pages so the project looks professional and ranks well.
 
 ---
 
 ## 📅 Roadmap (Agile Style)
 
-### MVP (Complete)
+**MVP (Complete)**
 - JSON-driven recipes
 - Recipe list page
-- Single recipe detail page
+- Single recipe detail view
 - Tag filtering
 - Basic search
 
-### Next Iterations
-- User auth to save personal recipe collections
-- Editable “add your own recipe” form with local storage fallback
-- Category/tag management UI
+**Next Iterations**
+- Printable recipe view
 - Dark mode styling
-- Automated tests for data integrity
-
----
-
-## 👥 User Stories
-
-- **As a visitor**, I want to browse recipes by category/tag so that I can quickly find meals that fit my needs.
-- **As a cook**, I want to see step-by-step instructions so that I can follow the recipe without confusion.
-- **As a contributor**, I want to add a new recipe to `recipes.json` without touching HTML so that updates are simple and low-risk.
-- **As a site owner**, I want consistent styling and SEO-rich pages so that the project looks professional and ranks well.
-
----
+- “Add your own recipe” form with local storage fallback
+- Smarter tag organization (meal type, cuisine, dietary)
+- Automated validation on deployment
 
