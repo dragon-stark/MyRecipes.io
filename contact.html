@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,13 +11,11 @@
     <!-- normalize -->
     <link rel="stylesheet" href="./css/normalize.css" />
     <!-- font-awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <!-- main css -->
     <link rel="stylesheet" href="./css/main.css" />
   </head>
+
   <body>
     <!-- nav  -->
     <nav class="navbar">
@@ -25,8 +24,8 @@
           <a href="index.html" class="nav-logo">
             <img src="./assets/logo.svg" alt="simply recipes" />
           </a>
-          <button class="nav-btn btn">
-            <i class="fas fa-align-justify"></i>
+          <button class="nav-btn btn" aria-label="toggle navigation">
+            <i class="fas fa-align-justify" aria-hidden="true"></i>
           </button>
         </div>
         <div class="nav-links">
@@ -42,84 +41,66 @@
       </div>
     </nav>
     <!-- end of nav -->
+
     <main class="page">
       <section class="contact-container">
         <article class="contact-info">
-          <h3>Want To Get In Touch?</h3>
+          <h3>Get in touch</h3>
           <p>
-            Four dollar toast biodiesel plaid salvia actually pickled banjo
-            bespoke mlkshk intelligentsia edison bulb synth.
+            Questions, ideas, or a recipe you want to see here? Drop a note and I’ll get back to you.
           </p>
-          <p>Cardigan prism bicycle rights put a bird on it deep v.</p>
           <p>
-            Hashtag swag health goth air plant, raclette listicle fingerstache
-            cold-pressed fanny pack bicycle rights cardigan poke.
+            Prefer socials? Links are in the footer.
           </p>
         </article>
         <article>
-          <form class="form contact-form">
+          <form class="form contact-form" onsubmit="event.preventDefault(); alert('Thanks!');">
+            <h4>Contact Form</h4>
             <div class="form-row">
-              <label html="name" class="form-label">your name</label>
+              <label for="name" class="form-label">your name</label>
               <input type="text" name="name" id="name" class="form-input" />
             </div>
             <div class="form-row">
-              <label html="email" class="form-label">your email</label>
-              <input type="text" name="email" id="email" class="form-input" />
+              <label for="email" class="form-label">your email</label>
+              <input type="email" name="email" id="email" class="form-input" />
             </div>
             <div class="form-row">
-              <label html="message" class="form-label">message</label>
-              <textarea
-                name="message"
-                id="message"
-                class="form-textarea"
-              ></textarea>
+              <label for="message" class="form-label">message</label>
+              <textarea name="message" id="message" class="form-textarea"></textarea>
             </div>
-            <button type="submit" class="btn btn-block">
-              submit
-            </button>
+            <button type="submit" class="btn">send</button>
           </form>
         </article>
       </section>
-      <!-- featured recipes -->
+
       <section class="featured-recipes">
-        <h5 class="featured-title">Look At This Awesomesouce!</h5>
+        <h5 class="featured-title">Popular picks</h5>
         <div class="recipes-list">
           <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-1.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
+          <a href="./single-recipe.html?slug=carne-asada" class="recipe">
+            <img src="./assets/recipes/recipe-1.jpeg" class="img recipe-img" alt="Carne Asada" />
             <h5>Carne Asada</h5>
             <p>Prep : 15min | Cook : 5min</p>
           </a>
           <!-- end of single recipe -->
           <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-2.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
+          <a href="./single-recipe.html?slug=greek-ribs" class="recipe">
+            <img src="./assets/recipes/recipe-2.jpeg" class="img recipe-img" alt="Greek Ribs" />
             <h5>Greek Ribs</h5>
             <p>Prep : 15min | Cook : 5min</p>
           </a>
           <!-- end of single recipe -->
           <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-3.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
+          <a href="./single-recipe.html?slug=vegetable-soup" class="recipe">
+            <img src="./assets/recipes/recipe-3.jpeg" class="img recipe-img" alt="Vegetable Soup" />
             <h5>Vegetable Soup</h5>
-            <p>Prep : 15min | Cook : 5min</p>
+            <p>Prep : 15min | Cook : 30min</p>
           </a>
           <!-- end of single recipe -->
         </div>
       </section>
     </main>
+
     <!-- footer -->
     <footer class="page-footer">
       <p>
@@ -132,4 +113,5 @@
     </footer>
     <script src="./js/app.js"></script>
   </body>
+
 </html>
