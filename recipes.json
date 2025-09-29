@@ -7,7 +7,7 @@
     "tags": ["bread","side"],
     "yield": "8 servings",
     "prepTime": "PT10M",
-    "cookTime": "PT20M",
+    "cookTime": "PT45M",
     "totalTime": "PT50M",
     "ingredients": [
       "1 can of cream of corn",
@@ -17,7 +17,13 @@
       "1 box of Jiffy corn mix",
       "1 cup melted butter",
       "2 eggs"
-    ],
+    ], "tools": [
+  "9x13 baking pan",
+  "Mixing bowls",
+  "Whisk",
+  "Rubber spatula",
+  "Oven mitts"
+],
     "instructions": [
       "Preheat oven to 350°F",
       "In a bowl, mix dry ingredients.",
@@ -44,7 +50,13 @@
       "1 tsp baking powder",
       "Pinch of salt",
       "Butter or oil for the pan"
-    ],
+    ], "tools": [
+  "Mixing bowls",
+  "Whisk",
+  "Nonstick skillet or griddle",
+  "Spatula",
+  "Measuring cups/spoons"
+],
     "instructions": [
       "Mash bananas; whisk in eggs and milk.",
       "Stir in flour, baking powder, and salt until just combined.",
@@ -70,7 +82,13 @@
     "1 tsp ground cumin",
     "1 tsp chili powder",
     "1 tsp salt, 1/2 tsp pepper"
-  ],
+  ], "tools": [
+  "Grill or grill pan",
+  "Tongs",
+  "Sharp knife",
+  "Cutting board",
+  "Mixing bowl"
+],
   "instructions": [
     "Whisk citrus, oil, garlic, cumin, chili, salt, pepper.",
     "Marinate steak 30–60 min (room temp).",
@@ -95,7 +113,13 @@
     "3 cloves garlic, minced",
     "2 tsp dried oregano",
     "1 tsp salt, 1/2 tsp pepper"
-  ],
+  ], "tools": [
+  "Grill or grill pan",
+  "Tongs",
+  "Sharp knife",
+  "Cutting board",
+  "Mixing bowl"
+],
   "instructions": [
     "Heat oven to 375°F (190°C).",
     "Mix oil, lemon, garlic, oregano, salt, pepper; coat ribs.",
@@ -123,7 +147,13 @@
     "4 cups vegetable broth",
     "2 cups mixed chopped veg (zucchini, green beans, etc.)",
     "Salt, pepper to taste"
-  ],
+  ], "tools": [
+  "Large pot or Dutch oven",
+  "Chef’s knife",
+  "Cutting board",
+  "Wooden spoon",
+  "Ladle"
+],
   "instructions": [
     "Sauté onion, carrots, celery in oil 5–7 min; add garlic 30 sec.",
     "Add tomatoes, broth; simmer 10 min.",
