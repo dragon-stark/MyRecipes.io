@@ -98,18 +98,29 @@
           if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
           const recipes = await res.json();
 
+          // sort A→Z for easier scanning
+          recipes.sort((a, b) => a.title.localeCompare(b.title));
+
+          // Build cards WITHOUT nested anchors:
+          // - image + title link to the recipe page
+          // - tag pills link to tag pages
           const list = document.getElementById("recipes-list");
-          list.innerHTML = recipes
-            .map(
-              (r) => `
-          <a href="./single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
-            <img src="${r.image}" class="img recipe-img" alt="${r.title}" loading="lazy" />
-            <h5>${r.title}</h5>
-            <p>${r.description || ""}</p>
-            <small>${(r.tags || []).join(", ")}</small>
-          </a>`
-            )
-            .join("");
+          list.innerHTML = recipes.map(r => `
+            <article class="recipe">
+              <a class="recipe-thumb" href="./single-recipe.html?slug=${encodeURIComponent(r.slug)}">
+                <img src="${r.image}" class="img recipe-img" alt="${r.title}" loading="lazy" />
+              </a>
+              <h5>
+                <a href="./single-recipe.html?slug=${encodeURIComponent(r.slug)}">${r.title}</a>
+              </h5>
+              <p>${r.description || ""}</p>
+              <div class="recipe-tags">
+                ${(r.tags || []).map(t => `
+                  <a href="./tag-template.html?tag=${encodeURIComponent(t)}">${t}</a>
+                `).join('')}
+              </div>
+            </article>
+          `).join("");
 
           // Tag cloud in the LEFT sidebar
           const tagCounts = recipes.reduce((acc, r) => {
@@ -119,9 +130,8 @@
           const tagList = document.getElementById("tags-list");
           tagList.innerHTML = Object.entries(tagCounts)
             .sort(([a], [b]) => a.localeCompare(b))
-            .map(
-              ([tag, count]) =>
-                `<a href="./tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`
+            .map(([tag, count]) =>
+              `<a href="./tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`
             )
             .join("");
         } catch (err) {
