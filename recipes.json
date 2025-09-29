@@ -3,7 +3,7 @@
     "slug": "cornbread",
     "title": "Cornbread",
     "description": "A golden, crumbly, slightly sweet Southern classic.",
-    "image": "assets/images/cornbread.jpg",
+    "image": "assets/recipes/cornbread.png",
     "tags": ["bread","side"],
     "yield": "8 servings",
     "prepTime": "PT10M",
@@ -51,5 +51,86 @@
       "Stir in flour, baking powder, and salt until just combined.",
       "Cook 2–3 minutes per side on a greased skillet."
     ]
-  }
+  },
+{
+  "slug": "carne-asada",
+  "title": "Carne Asada",
+  "description": "Citrus-marinated grilled steak—juicy, charred edges.",
+  "image": "assets/recipes/recipe-1.jpeg",
+  "tags": ["beef","grill","dinner"],
+  "yield": "4 servings",
+  "prepTime": "PT15M",
+  "cookTime": "PT10M",
+  "totalTime": "PT25M",
+  "ingredients": [
+    "1.5 lb skirt or flank steak",
+    "3 tbsp lime juice",
+    "2 tbsp orange juice",
+    "2 tbsp olive oil",
+    "2 cloves garlic, minced",
+    "1 tsp ground cumin",
+    "1 tsp chili powder",
+    "1 tsp salt, 1/2 tsp pepper"
+  ],
+  "instructions": [
+    "Whisk citrus, oil, garlic, cumin, chili, salt, pepper.",
+    "Marinate steak 30–60 min (room temp).",
+    "Grill high heat 3–4 min/side to medium-rare.",
+    "Rest 5 min; slice thinly against the grain."
+  ]
+},
+{
+  "slug": "greek-ribs",
+  "title": "Greek Ribs",
+  "description": "Lemony, garlicky ribs with herby crust.",
+  "image": "assets/recipes/recipe-2.jpeg",
+  "tags": ["pork","dinner","roast"],
+  "yield": "4 servings",
+  "prepTime": "PT15M",
+  "cookTime": "PT1H15M",
+  "totalTime": "PT1H30M",
+  "ingredients": [
+    "2 lb pork ribs",
+    "3 tbsp olive oil",
+    "2 tbsp lemon juice",
+    "3 cloves garlic, minced",
+    "2 tsp dried oregano",
+    "1 tsp salt, 1/2 tsp pepper"
+  ],
+  "instructions": [
+    "Heat oven to 375°F (190°C).",
+    "Mix oil, lemon, garlic, oregano, salt, pepper; coat ribs.",
+    "Bake covered 60 min; uncover and roast 15 min to brown.",
+    "Rest 5–10 min; slice and serve."
+  ]
+},
+{
+  "slug": "vegetable-soup",
+  "title": "Vegetable Soup",
+  "description": "Bright, cozy, and weeknight-easy.",
+  "image": "assets/recipes/recipe-3.jpeg",
+  "tags": ["soup","vegetarian","dinner"],
+  "yield": "6 servings",
+  "prepTime": "PT15M",
+  "cookTime": "PT30M",
+  "totalTime": "PT45M",
+  "ingredients": [
+    "2 tbsp olive oil",
+    "1 onion, diced",
+    "2 carrots, sliced",
+    "2 celery stalks, sliced",
+    "2 cloves garlic, minced",
+    "1 can (14oz) diced tomatoes",
+    "4 cups vegetable broth",
+    "2 cups mixed chopped veg (zucchini, green beans, etc.)",
+    "Salt, pepper to taste"
+  ],
+  "instructions": [
+    "Sauté onion, carrots, celery in oil 5–7 min; add garlic 30 sec.",
+    "Add tomatoes, broth; simmer 10 min.",
+    "Add mixed veg; simmer 10–15 min until tender.",
+    "Season and serve."
+  ]
+}
+
 ]

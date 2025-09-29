@@ -44,6 +44,13 @@
 
     <!-- main -->
     <section class="recipes-container">
+      <!-- LEFT SIDEBAR expected by CSS (200px at ≥992px) -->
+      <aside class="tags-container">
+        <h4>Recipes</h4>
+        <div class="tags-list" id="tags-list"></div>
+      </aside>
+
+      <!-- MAIN COLUMN -->
       <div class="content">
         <h1 class="page-title">All recipes</h1>
 
@@ -55,9 +62,6 @@
 
         <!-- Dynamic list target -->
         <div class="recipes-list" id="recipes-list" aria-live="polite"></div>
-
-        <!-- Optional tag cloud -->
-        <div class="tags-list" id="tags-list"></div>
       </div>
     </section>
     <!-- end of main -->
@@ -96,7 +100,7 @@
           list.innerHTML = recipes
             .map(
               (r) => `
-          <a href="single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
+          <a href="./single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
             <img src="${r.image}" class="img recipe-img" alt="${r.title}" loading="lazy" />
             <h5>${r.title}</h5>
             <p>${r.description || ""}</p>
@@ -105,7 +109,7 @@
             )
             .join("");
 
-          // Tag cloud
+          // Tag cloud in the LEFT sidebar
           const tagCounts = recipes.reduce((acc, r) => {
             (r.tags || []).forEach((t) => (acc[t] = (acc[t] || 0) + 1));
             return acc;
@@ -115,7 +119,7 @@
             .sort(([a], [b]) => a.localeCompare(b))
             .map(
               ([tag, count]) =>
-                `<a href="tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`
+                `<a href="./tag-template.html?tag=${encodeURIComponent(tag)}">${tag} (${count})</a>`
             )
             .join("");
         } catch (err) {
@@ -163,7 +167,6 @@
           const out = document.getElementById("search-results");
           if (!input || !out) return;
 
-          // Simple debounce for nicer typing
           let t;
           input.addEventListener("input", () => {
             clearTimeout(t);
@@ -176,7 +179,7 @@
                 const d = docs.find((x) => x.slug === hit.ref);
                 out.insertAdjacentHTML(
                   "beforeend",
-                  `<li><a href="single-recipe.html?slug=${encodeURIComponent(d.slug)}">${d.title}</a> — ${d.description}</li>`
+                  `<li><a href="./single-recipe.html?slug=${encodeURIComponent(d.slug)}">${d.title}</a> — ${d.description}</li>`
                 );
               });
             }, 120);
