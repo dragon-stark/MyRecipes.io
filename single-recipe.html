@@ -3,178 +3,208 @@
 
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Recipe | My Recipes</title>
-
-    <!-- keep your existing styles -->
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/main.css" />
-
-    <!-- keep your small nav/year script -->
-    <script defer src="js/app.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single Recipe || Final</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+    <!-- normalize -->
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
 
   <body>
+    <!-- nav  -->
     <nav class="navbar">
       <div class="nav-center">
         <div class="nav-header">
-          <a href="index.html" class="nav-logo">My Recipes</a>
-          <button class="btn nav-btn" aria-label="toggle navigation">
+          <a href="index.html" class="nav-logo">
+            <img src="./assets/logo.svg" alt="simply recipes" />
+          </a>
+          <button class="nav-btn btn" aria-label="toggle navigation">
             <i class="fas fa-align-justify" aria-hidden="true"></i>
           </button>
         </div>
         <div class="nav-links">
           <a href="index.html" class="nav-link">home</a>
-          <a href="recipes.html" class="nav-link">recipes</a>
+          <a href="about.html" class="nav-link">about</a>
           <a href="tags.html" class="nav-link">tags</a>
+          <a href="recipes.html" class="nav-link">recipes</a>
+
+          <div class="nav-link contact-link">
+            <a href="contact.html" class="btn">contact</a>
+          </div>
         </div>
       </div>
     </nav>
+    <!-- end of nav -->
 
     <main class="page">
-      <!-- Hero with image + meta -->
-      <section class="recipe-hero">
-        <img id="recipe-image" class="img recipe-hero-img" alt="" />
-        <article class="recipe-info">
-          <h2 id="recipe-title">Loading…</h2>
-          <p id="recipe-desc"></p>
+      <div class="recipe-page">
+        <section class="recipe-hero">
+          <img id="recipe-image" class="img recipe-hero-img" alt="" />
+          <article class="recipe-info">
+            <h2 id="recipe-title"></h2>
+            <p id="recipe-desc"></p>
+            <div class="recipe-icons">
+              <article>
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <h5>prep time</h5>
+                <p id="recipe-prep">—</p>
+              </article>
+              <article>
+                <i class="far fa-clock" aria-hidden="true"></i>
+                <h5>cook time</h5>
+                <p id="recipe-cook">—</p>
+              </article>
+              <article>
+                <i class="fas fa-user-friends" aria-hidden="true"></i>
+                <h5>servings</h5>
+                <p id="recipe-yield">—</p>
+              </article>
+            </div>
+            <p class="recipe-tags" id="recipe-tags"></p>
+          </article>
+        </section>
 
-          <div class="recipe-icons">
-            <article>
-              <i class="fas fa-clock" aria-hidden="true"></i>
-              <h5>prep time</h5>
-              <p id="recipe-prep">—</p>
-            </article>
-            <article>
-              <i class="far fa-clock" aria-hidden="true"></i>
-              <h5>cook time</h5>
-              <p id="recipe-cook">—</p>
-            </article>
-            <article>
-              <i class="fas fa-user-friends" aria-hidden="true"></i>
-              <h5>servings</h5>
-              <p id="recipe-yield">—</p>
-            </article>
-          </div>
-
-          <p class="recipe-tags" id="recipe-tags"></p>
-        </article>
-      </section>
-
-      <!-- Ingredients + Instructions -->
-      <section class="recipe-content">
-        <article>
-          <h4>instructions</h4>
-          <div id="instructions" aria-live="polite"></div>
-        </article>
-
-        <article class="second-column">
-          <div>
-            <h4>ingredients</h4>
-            <div id="ingredients"></div>
-          </div>
-          <div>
-            <h4>tools</h4>
-            <!-- You can later make this data-driven too -->
-            <p class="single-tool">10" cast-iron skillet</p>
-            <p class="single-tool">Mixing bowls</p>
-            <p class="single-tool">Whisk</p>
-          </div>
-        </article>
-      </section>
+        <!-- content -->
+        <section class="recipe-content">
+          <article>
+            <h4>instructions</h4>
+            <div id="instructions" aria-live="polite"></div>
+          </article>
+          <article class="second-column">
+            <div>
+              <h4>ingredients</h4>
+              <div id="ingredients"></div>
+            </div>
+            <div>
+              <h4>tools</h4>
+              <p class="single-tool">10" cast-iron (example)</p>
+              <p class="single-tool">Mixing bowls</p>
+              <p class="single-tool">Whisk</p>
+            </div>
+          </article>
+        </section>
+      </div>
     </main>
 
+    <!-- footer -->
     <footer class="page-footer">
-      <p>&copy; <span id="date"></span> My Recipes</p>
+      <p>
+        &copy;
+        <span id="date"></span>
+        <span class="footer-logo">Recipes</span>
+        handcrafted by
+        <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
+      </p>
     </footer>
 
-    <!-- Data binding + JSON-LD (refined, keeps your styles intact) -->
+    <!-- keep your app.js -->
+    <script src="./js/app.js"></script>
+
+    <!-- Data binding + JSON-LD (subfolder-safe, preserves your classes/styles) -->
     <script>
       (async function () {
         try {
-          // Subfolder-safe base path (works at / and /MyRecipes.io/)
+          // subfolder-safe base path (works at / and /MyRecipes.io/)
           const basePath = (function () {
-            const parts = location.pathname.split('/');
+            const parts = location.pathname.split("/");
             if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
-            return parts.join('/') || '/';
+            return parts.join("/") || "/";
           })();
-          const join = (a, b) => (a.endsWith('/') ? a.slice(0, -1) : a) + '/' + (b.startsWith('/') ? b.slice(1) : b);
+          const join = (a, b) =>
+            (a.endsWith("/") ? a.slice(0, -1) : a) +
+            "/" +
+            (b.startsWith("/") ? b.slice(1) : b);
 
-          // Read slug; if missing, fall back to first recipe so page still shows something
-          const slugParam = new URLSearchParams(location.search).get('slug');
+          // 1) read slug (fallback to first recipe if missing)
+          const slug = new URLSearchParams(location.search).get("slug");
 
-          // Load data
-          const dataUrl = join(basePath, 'recipes.json');
-          const res = await fetch(dataUrl, { cache: 'no-store' });
-          if (!res.ok) throw new Error('recipes.json not found at ' + dataUrl);
+          // 2) load data
+          const dataUrl = join(basePath, "recipes.json");
+          const res = await fetch(dataUrl, { cache: "no-store" });
+          if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
           const all = await res.json();
 
-          const r = slugParam ? all.find(x => x.slug === slugParam) : all[0];
-
+          const r = slug ? all.find((x) => x.slug === slug) : all[0];
           if (!r) {
-            document.querySelector('main.page').innerHTML =
-              '<section class="recipes-container"><h1>Recipe not found</h1><p><a href="recipes.html">Back to all recipes</a></p></section>';
+            document.querySelector("main.page").innerHTML =
+              '<section class="recipes-container"><h1>Recipe not found</h1><p><a href="./recipes.html">Back to all recipes</a></p></section>';
             return;
           }
 
-          // Fill content (keeps your existing classes and layout)
-          document.getElementById('recipe-title').textContent = r.title;
-          document.getElementById('recipe-desc').textContent = r.description || '';
+          // 3) fill content (keep your classes)
+          document.getElementById("recipe-title").textContent = r.title;
+          document.getElementById("recipe-desc").textContent =
+            r.description || "";
 
-          const heroImg = document.getElementById('recipe-image');
-          heroImg.src = r.image;
-          heroImg.alt = r.title;
+          const img = document.getElementById("recipe-image");
+          img.src = r.image;
+          img.alt = r.title;
 
-          const pretty = s => s ? s.replace(/^PT/i, '').toLowerCase() : '—';
-          document.getElementById('recipe-prep').textContent = pretty(r.prepTime);
-          document.getElementById('recipe-cook').textContent = pretty(r.cookTime);
-          document.getElementById('recipe-yield').textContent = r.yield || '—';
+          const pretty = (s) => (s ? s.replace(/^PT/i, "").toLowerCase() : "—");
+          document.getElementById("recipe-prep").textContent = pretty(r.prepTime);
+          document.getElementById("recipe-cook").textContent = pretty(r.cookTime);
+          document.getElementById("recipe-yield").textContent = r.yield || "—";
 
           document.getElementById('recipe-tags').innerHTML =
-            (r.tags || []).map(t => `<a href="tag-template.html?tag=${encodeURIComponent(t)}">#${t}</a>`).join(' ');
+            (r.tags || [])
+              .map(t => `<a href="./tag-template.html?tag=${encodeURIComponent(t)}">${t}</a>`)
+              .join('');
 
-          document.getElementById('ingredients').innerHTML =
-            (r.ingredients || []).map(i => `<p class="single-ingredient">${i}</p>`).join('');
 
-          document.getElementById('instructions').innerHTML =
-            (r.instructions || []).map((step, i) => `
-          <div class="single-instruction">
-            <header><p>step ${i + 1}</p><div></div></header>
-            <p>${step}</p>
-          </div>
-        `).join('');
 
-          // JSON-LD structured data for rich results
+          document.getElementById("ingredients").innerHTML = (r.ingredients || [])
+            .map((i) => `<p class="single-ingredient">${i}</p>`)
+            .join("");
+
+          document.getElementById("instructions").innerHTML = (
+            r.instructions || []
+          )
+            .map(
+              (step, i) => `
+            <div class="single-instruction">
+              <header><p>step ${i + 1}</p><div></div></header>
+              <p>${step}</p>
+            </div>`
+            )
+            .join("");
+
+          // 4) JSON-LD structured data
           const ld = {
             "@context": "https://schema.org",
             "@type": "Recipe",
-            "name": r.title,
-            "description": r.description || "",
-            "image": [r.image],
-            "recipeIngredient": (r.ingredients || []),
-            "recipeInstructions": (r.instructions || []).map(txt => ({ "@type": "HowToStep", "text": txt })),
-            "totalTime": r.totalTime || undefined,
-            "prepTime": r.prepTime || undefined,
-            "cookTime": r.cookTime || undefined,
-            "recipeYield": r.yield || undefined
+            name: r.title,
+            description: r.description || "",
+            image: [r.image],
+            recipeIngredient: r.ingredients || [],
+            recipeInstructions: (r.instructions || []).map((txt) => ({
+              "@type": "HowToStep",
+              text: txt,
+            })),
+            totalTime: r.totalTime || undefined,
+            prepTime: r.prepTime || undefined,
+            cookTime: r.cookTime || undefined,
+            recipeYield: r.yield || undefined,
           };
-          const ldScript = document.createElement('script');
-          ldScript.type = 'application/ld+json';
-          ldScript.textContent = JSON.stringify(ld);
-          document.head.appendChild(ldScript);
+          const s = document.createElement("script");
+          s.type = "application/ld+json";
+          s.textContent = JSON.stringify(ld);
+          document.head.appendChild(s);
 
-          // Optional: update <title> for better UX
-          document.title = r.title + ' | My Recipes';
+          // Optional: nicer tab title
+          document.title = r.title + " | Recipes";
         } catch (err) {
           console.error(err);
-          document.querySelector('main.page').innerHTML =
-            '<section class="recipes-container"><h1>Error loading recipe</h1><p>Open DevTools→Console for details.</p></section>';
+          document.querySelector("main.page").innerHTML =
+            '<section class="recipes-container"><h1>Error loading recipe</h1><p>Open Console for details.</p></section>';
         }
       })();
     </script>
-
-    <!-- Keep your icon kit -->
-    <script src="https://kit.fontawesome.com/a2e0e6ad5b.js" crossorigin="anonymous"></script>
   </body>
 
 </html>
