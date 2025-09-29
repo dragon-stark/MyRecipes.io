@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,13 +11,11 @@
     <!-- normalize -->
     <link rel="stylesheet" href="./css/normalize.css" />
     <!-- font-awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <!-- main css -->
     <link rel="stylesheet" href="./css/main.css" />
   </head>
+
   <body>
     <!-- nav  -->
     <nav class="navbar">
@@ -25,8 +24,8 @@
           <a href="index.html" class="nav-logo">
             <img src="./assets/logo.svg" alt="simply recipes" />
           </a>
-          <button class="nav-btn btn">
-            <i class="fas fa-align-justify"></i>
+          <button class="nav-btn btn" aria-label="toggle navigation">
+            <i class="fas fa-align-justify" aria-hidden="true"></i>
           </button>
         </div>
         <div class="nav-links">
@@ -42,111 +41,57 @@
       </div>
     </nav>
     <!-- end of nav -->
+
     <main class="page">
       <div class="recipe-page">
         <section class="recipe-hero">
-          <img
-            src="./assets/recipes/recipe-4.jpeg"
-            class="img recipe-hero-img"
-          />
+          <img id="recipe-image" class="img recipe-hero-img" alt="" />
           <article class="recipe-info">
-            <h2>Banana Pancakes</h2>
-            <p>
-              Shabby chic humblebrag banh mi bushwick, banjo kale chips
-              meggings. Cred selfies sartorial, cloud bread disrupt blue bottle
-              seitan. Dreamcatcher tousled bitters, health goth vegan venmo
-              whatever street art lyft shabby chic pitchfork beard. Drinking
-              vinegar poke tbh, iPhone coloring book polaroid truffaut tousled
-              ramps pug trust fund letterpress. Portland four loko austin
-              chicharrones bitters single-origin coffee. Leggings letterpress
-              occupy pour-over.
-            </p>
+            <h2 id="recipe-title"></h2>
+            <p id="recipe-desc"></p>
             <div class="recipe-icons">
               <article>
-                <i class="fas fa-clock"></i>
+                <i class="fas fa-clock" aria-hidden="true"></i>
                 <h5>prep time</h5>
-                <p>30 min.</p>
+                <p id="recipe-prep">—</p>
               </article>
               <article>
-                <i class="far fa-clock"></i>
+                <i class="far fa-clock" aria-hidden="true"></i>
                 <h5>cook time</h5>
-                <p>15 min.</p>
+                <p id="recipe-cook">—</p>
               </article>
               <article>
-                <i class="fas fa-user-friends"></i>
-                <h5>serving</h5>
-                <p>6 servings</p>
+                <i class="fas fa-user-friends" aria-hidden="true"></i>
+                <h5>servings</h5>
+                <p id="recipe-yield">—</p>
               </article>
             </div>
-            <p class="recipe-tags">
-              Tags :
-              <a href="tag-template.html">beef</a>
-              <a href="tag-template.html">breakfast</a>
-              <a href="tag-template.html">pancakes</a>
-              <a href="tag-template.html">food</a>
-            </p>
+            <p class="recipe-tags" id="recipe-tags"></p>
           </article>
         </section>
+
         <!-- content -->
         <section class="recipe-content">
           <article>
             <h4>instructions</h4>
-            <!-- single instruction -->
-            <div class="single-instruction">
-              <header>
-                <p>step 1</p>
-                <div></div>
-              </header>
-              <p>
-                I'm baby mustache man braid fingerstache small batch venmo
-                succulents shoreditch.
-              </p>
-            </div>
-            <!-- end of single instruction -->
-            <!-- single instruction -->
-            <div class="single-instruction">
-              <header>
-                <p>step 2</p>
-                <div></div>
-              </header>
-              <p>
-                Pabst pitchfork you probably haven't heard of them, asymmetrical
-                seitan tousled succulents wolf banh mi man bun bespoke selfies
-                freegan ethical hexagon.
-              </p>
-            </div>
-            <!-- end of single instruction -->
-            <!-- single instruction -->
-            <div class="single-instruction">
-              <header>
-                <p>step 3</p>
-                <div></div>
-              </header>
-              <p>
-                Polaroid iPhone bitters chambray. Cornhole swag kombucha
-                live-edge.
-              </p>
-            </div>
-            <!-- end of single instruction -->
+            <div id="instructions" aria-live="polite"></div>
           </article>
           <article class="second-column">
             <div>
               <h4>ingredients</h4>
-              <p class="single-ingredient">1 1/2 cups dry pancake mix</p>
-              <p class="single-ingredient">1/2 cup flax seed meal</p>
-              <p class="single-ingredient">1 cup skim milk</p>
+              <div id="ingredients"></div>
             </div>
             <div>
               <h4>tools</h4>
-              <p class="single-tool">Hand Blender</p>
-              <p class="single-tool">Large Heavy Pot With Lid</p>
-              <p class="single-tool">Measuring Spoons</p>
-              <p class="single-tool">Measuring Cups</p>
+              <p class="single-tool">10" cast-iron (example)</p>
+              <p class="single-tool">Mixing bowls</p>
+              <p class="single-tool">Whisk</p>
             </div>
           </article>
         </section>
       </div>
     </main>
+
     <!-- footer -->
     <footer class="page-footer">
       <p>
@@ -157,6 +102,109 @@
         <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
       </p>
     </footer>
+
+    <!-- keep your app.js -->
     <script src="./js/app.js"></script>
+
+    <!-- Data binding + JSON-LD (subfolder-safe, preserves your classes/styles) -->
+    <script>
+      (async function () {
+        try {
+          // subfolder-safe base path (works at / and /MyRecipes.io/)
+          const basePath = (function () {
+            const parts = location.pathname.split("/");
+            if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
+            return parts.join("/") || "/";
+          })();
+          const join = (a, b) =>
+            (a.endsWith("/") ? a.slice(0, -1) : a) +
+            "/" +
+            (b.startsWith("/") ? b.slice(1) : b);
+
+          // 1) read slug (fallback to first recipe if missing)
+          const slug = new URLSearchParams(location.search).get("slug");
+
+          // 2) load data
+          const dataUrl = join(basePath, "recipes.json");
+          const res = await fetch(dataUrl, { cache: "no-store" });
+          if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
+          const all = await res.json();
+
+          const r = slug ? all.find((x) => x.slug === slug) : all[0];
+          if (!r) {
+            document.querySelector("main.page").innerHTML =
+              '<section class="recipes-container"><h1>Recipe not found</h1><p><a href="./recipes.html">Back to all recipes</a></p></section>';
+            return;
+          }
+
+          // 3) fill content (keep your classes)
+          document.getElementById("recipe-title").textContent = r.title;
+          document.getElementById("recipe-desc").textContent =
+            r.description || "";
+
+          const img = document.getElementById("recipe-image");
+          img.src = r.image;
+          img.alt = r.title;
+
+          const pretty = (s) => (s ? s.replace(/^PT/i, "").toLowerCase() : "—");
+          document.getElementById("recipe-prep").textContent = pretty(r.prepTime);
+          document.getElementById("recipe-cook").textContent = pretty(r.cookTime);
+          document.getElementById("recipe-yield").textContent = r.yield || "—";
+
+          document.getElementById('recipe-tags').innerHTML =
+            (r.tags || [])
+              .map(t => `<a href="./tag-template.html?tag=${encodeURIComponent(t)}">${t}</a>`)
+              .join('');
+
+
+
+          document.getElementById("ingredients").innerHTML = (r.ingredients || [])
+            .map((i) => `<p class="single-ingredient">${i}</p>`)
+            .join("");
+
+          document.getElementById("instructions").innerHTML = (
+            r.instructions || []
+          )
+            .map(
+              (step, i) => `
+            <div class="single-instruction">
+              <header><p>step ${i + 1}</p><div></div></header>
+              <p>${step}</p>
+            </div>`
+            )
+            .join("");
+
+          // 4) JSON-LD structured data
+          const ld = {
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            name: r.title,
+            description: r.description || "",
+            image: [r.image],
+            recipeIngredient: r.ingredients || [],
+            recipeInstructions: (r.instructions || []).map((txt) => ({
+              "@type": "HowToStep",
+              text: txt,
+            })),
+            totalTime: r.totalTime || undefined,
+            prepTime: r.prepTime || undefined,
+            cookTime: r.cookTime || undefined,
+            recipeYield: r.yield || undefined,
+          };
+          const s = document.createElement("script");
+          s.type = "application/ld+json";
+          s.textContent = JSON.stringify(ld);
+          document.head.appendChild(s);
+
+          // Optional: nicer tab title
+          document.title = r.title + " | Recipes";
+        } catch (err) {
+          console.error(err);
+          document.querySelector("main.page").innerHTML =
+            '<section class="recipes-container"><h1>Error loading recipe</h1><p>Open Console for details.</p></section>';
+        }
+      })();
+    </script>
   </body>
+
 </html>

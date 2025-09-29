@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,13 +11,11 @@
     <!-- normalize -->
     <link rel="stylesheet" href="./css/normalize.css" />
     <!-- font-awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <!-- main css -->
     <link rel="stylesheet" href="./css/main.css" />
   </head>
+
   <body>
     <!-- nav  -->
     <nav class="navbar">
@@ -25,8 +24,8 @@
           <a href="index.html" class="nav-logo">
             <img src="./assets/logo.svg" alt="simply recipes" />
           </a>
-          <button class="nav-btn btn">
-            <i class="fas fa-align-justify"></i>
+          <button class="nav-btn btn" aria-label="toggle navigation">
+            <i class="fas fa-align-justify" aria-hidden="true"></i>
           </button>
         </div>
         <div class="nav-links">
@@ -42,69 +41,94 @@
       </div>
     </nav>
     <!-- end of nav -->
+
     <main class="page">
       <div class="featured-recipes">
-        <h4>Beef</h4>
-        <!-- recipes list -->
-        <div class="recipes-list">
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-1.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Carne Asada</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-2.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Greek Ribs</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-3.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Vegetable Soup</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
-          <!-- single recipe -->
-          <a href="single-recipe.html" class="recipe">
-            <img
-              src="./assets/recipes/recipe-4.jpeg"
-              class="img recipe-img"
-              alt=""
-            />
-            <h5>Banana Pancakes</h5>
-            <p>Prep : 15min | Cook : 5min</p>
-          </a>
-          <!-- end of single recipe -->
+        <!-- Keep your original heading style but make it dynamic -->
+        <h4 id="tag-title">Tag</h4>
+
+        <!-- recipes list (keeps your classes) -->
+        <div class="recipes-list" id="tag-results" aria-live="polite">
+          <!-- dynamically injected cards go here -->
         </div>
-        <!-- end of recipe list -->
       </div>
     </main>
+
     <!-- footer -->
     <footer class="page-footer">
       <p>
-        &copy;
-        <span id="date"></span>
+        &copy; <span id="date"></span>
         <span class="footer-logo">Recipes</span>
         handcrafted by
         <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
       </p>
     </footer>
+
     <script src="./js/app.js"></script>
+
+    <!-- Dynamic tag filtering (subfolder-safe, preserves your classes) -->
+    <script>
+      (async function () {
+        try {
+          // Works at / and at /YourProjectName/ (GitHub Pages project sites)
+          const basePath = (function () {
+            const parts = location.pathname.split("/");
+            if (parts.length && /\.html?$/.test(parts[parts.length - 1])) parts.pop();
+            return parts.join("/") || "/";
+          })();
+          const join = (a, b) =>
+            (a.endsWith("/") ? a.slice(0, -1) : a) + "/" + (b.startsWith("/") ? b.slice(1) : b);
+
+          const params = new URLSearchParams(location.search);
+          const tag = params.get("tag");
+
+          const titleEl = document.getElementById("tag-title");
+          const listEl = document.getElementById("tag-results");
+
+          if (!tag) {
+            titleEl.textContent = "No tag selected";
+            listEl.innerHTML =
+              '<p>Select a tag on the <a href="./tags.html">tags</a> page.</p>';
+            return;
+          }
+
+          // Friendly title (capitalize first letter)
+          titleEl.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+
+          const dataUrl = join(basePath, "recipes.json");
+          const res = await fetch(dataUrl, { cache: "no-store" });
+          if (!res.ok) throw new Error("recipes.json not found at " + dataUrl);
+          const all = await res.json();
+
+          // Case-insensitive tag filter
+          const q = String(tag).toLowerCase();
+          const items = all.filter(r => (r.tags || []).some(t => String(t).toLowerCase() === q));
+
+          if (items.length === 0) {
+            listEl.innerHTML = `<p>No recipes for <strong>${tag}</strong> yet.</p>`;
+            return;
+          }
+
+          // Preserve your card structure/classes
+          listEl.innerHTML = items.map(r => `
+            <a href="./single-recipe.html?slug=${encodeURIComponent(r.slug)}" class="recipe">
+              <img
+                src="${r.image}"
+                class="img recipe-img"
+                alt="${r.title}"
+                loading="lazy"
+              />
+              <h5>${r.title}</h5>
+              <p>${r.description || ""}</p>
+            </a>
+          `).join("");
+        } catch (err) {
+          console.error(err);
+          const listEl = document.getElementById("tag-results");
+          if (listEl) listEl.innerHTML = "<p>Could not load tag results. Check console.</p>";
+        }
+      })();
+    </script>
   </body>
+
 </html>

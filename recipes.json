@@ -1,0 +1,55 @@
+[
+  {
+    "slug": "cornbread",
+    "title": "Cornbread",
+    "description": "A golden, crumbly, slightly sweet Southern classic.",
+    "image": "assets/images/cornbread.jpg",
+    "tags": ["bread","side"],
+    "yield": "8 servings",
+    "prepTime": "PT10M",
+    "cookTime": "PT25M",
+    "totalTime": "PT35M",
+    "ingredients": [
+      "1 cup cornmeal",
+      "1 cup flour",
+      "1/4 cup sugar",
+      "1 tbsp baking powder",
+      "1/2 tsp salt",
+      "1 cup milk",
+      "2 eggs",
+      "1/4 cup melted butter"
+    ],
+    "instructions": [
+      "Preheat oven to 400°F (200°C).",
+      "In a bowl, mix dry ingredients.",
+      "In another bowl, mix wet ingredients.",
+      "Combine wet and dry, mix until just combined.",
+      "Pour into greased pan, bake 20–25 min."
+    ]
+  },
+  {
+    "slug": "banana-pancakes",
+    "title": "Banana Pancakes",
+    "description": "Fluffy and fast for weekend mornings.",
+    "image": "assets/recipes/recipe-4.jpeg",
+    "tags": ["breakfast","sweet"],
+    "yield": "4 servings",
+    "prepTime": "PT10M",
+    "cookTime": "PT10M",
+    "totalTime": "PT20M",
+    "ingredients": [
+      "2 ripe bananas",
+      "2 eggs",
+      "1 cup flour",
+      "1 cup milk",
+      "1 tsp baking powder",
+      "Pinch of salt",
+      "Butter or oil for the pan"
+    ],
+    "instructions": [
+      "Mash bananas; whisk in eggs and milk.",
+      "Stir in flour, baking powder, and salt until just combined.",
+      "Cook 2–3 minutes per side on a greased skillet."
+    ]
+  }
+]
