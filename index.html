@@ -70,15 +70,15 @@
     <!-- end of main -->
 
     <!-- footer -->
-    <footer class="page-footer">
-      <p>
-        &copy;
-        <span id="date"></span>
-        <span class="footer-logo">Recipes</span>
-        handcrafted by
-        <a href="https://www.hdestudios.com/">E.H. hdestudios.com</a>
-      </p>
-    </footer>
+    div id="footer"></div>
+    <script>
+      fetch("./footer.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("footer").innerHTML = html;
+        });
+    </script>
+
 
     <script src="./js/app.js"></script>
 
