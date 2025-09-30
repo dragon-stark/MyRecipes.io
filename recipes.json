@@ -1,5 +1,44 @@
 [
   {
+    "slug": "basil-pasta",
+    "title": "Basil Pasta",
+    "description": "A classic, sun-dried tomato & basil pasta.",
+    "image": "assets/recipes/cornbread.png",
+    "tags": ["pasta","pasta","side"],
+    "yield": "8 servings",
+    "prepTime": "PT10M",
+    "cookTime": "PT45M",
+    "totalTime": "PT50M",
+    "ingredients": [
+      "1.5 oz Sun dried tomatoes",
+      "1 Garlic clove",
+      "Green chives",
+      "Grape tomatoes",
+      "6 oz Spaghetti",
+      "Sliced almonds",
+      "Veggie stock concentrate",
+       "Sliced almonds",
+       "2 tbsp Cream cheese",
+        "1/4 cup Parmesan cheese",
+        "Sliced almonds",
+        "2 tbsp olive oil",
+        "1 tbsp butter",
+        "Salt, pepper to taste"
+    ], "tools": [
+  "Large pan","Large pot",
+  "Mixing bowls",
+  "Whisk",
+  "Rubber spatula",
+  "Oven mitts"
+],
+    "instructions": [
+      "In a bowl, mix dry ingredients.",
+      "In another bowl, mix wet ingredients.",
+      "Combine wet and dry, mix until just combined.",
+      "Pour into 9x13 pan, bake 40–45 min."
+    ]
+  },
+  {
     "slug": "cornbread",
     "title": "Cornbread",
     "description": "A golden, fluffy, slightly sweet Southern classic.",
